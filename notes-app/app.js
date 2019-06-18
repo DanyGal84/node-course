@@ -1,6 +1,6 @@
-const getNotes = require('./notes.js');
+/* eslint-disable no-console */
+const notes = require('./notes.js');
 const yargs = require('yargs');
-const chalk = require('chalk');
 
 // Customize yargs version
 yargs.version('1.1.0');
@@ -22,8 +22,7 @@ yargs.command({
     }
   },
   handler: function (argv) {
-    console.log('Title: ' + argv.title);
-    console.log('Body: ' + argv.body);
+    notes.addNote(argv.title, argv.body);
   }
 })
 
@@ -31,8 +30,15 @@ yargs.command({
 yargs.command({
   command: 'remove',
   describe: 'Remove a note',
-  handler: function () {
-    console.log('Removing the note');
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler: function (argv) {
+    notes.removeNote(argv.title);
   }
 })
 
@@ -41,7 +47,7 @@ yargs.command({
   command: 'list',
   describe: 'List all the saved notes',
   handler: function () {
-    console.log('This is a list of notes');
+    notes.listNotes();
   }
 })
 
@@ -49,12 +55,18 @@ yargs.command({
 yargs.command({
   command: 'read',
   describe: 'Read an specific saved note',
-  handler: function () {
-    console.log('This is what you read inside a note');
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler: function (argv) {
+    notes.readNote(argv.title);
   }
 })
 // add, remove, read, list
 
 yargs.parse();
 // console.log(yargs.argv);
-
