@@ -3,4 +3,4 @@ node_modules
 /weather-app/node_modules
 /web-server/node_modules
 /task-manager/node_modules
-/config
+/task-manager/config
